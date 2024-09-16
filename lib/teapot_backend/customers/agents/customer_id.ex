@@ -2,12 +2,13 @@ defmodule TeapotBackend.Customers.Agents.CustomerId do
   use Agent
   import Ecto.Query
 
+  alias TeapotBackend.Repo
   alias TeapotBackend.Customers.Projections.Customer
 
   def start_link(_initial_value) do
-    case from(c in Customer, select: max(c.id)) do
-      nil -> Agent.start_link(fn -> 0 end, name: __MODULE__)
-      count -> Agent.start_link(fn -> count end, name: __MODULE__)
+    case from(c in Customer, select: max(c.id)) |> Repo.one() do
+      nil -> Agent.start_link(fn -> 1 end, name: __MODULE__)
+      count -> Agent.start_link(fn -> count + 1 end, name: __MODULE__)
     end
   end
 

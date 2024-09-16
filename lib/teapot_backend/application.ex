@@ -9,15 +9,13 @@ defmodule TeapotBackend.Application do
   def start(_type, _args) do
     children = [
       # Commanded.
+      TeapotBackend.Repo,
       TeapotBackend.Cmd,
-
-      # Supervisors.
       TeapotBackend.Customers.Supervisors.Customer,
       TeapotBackend.Customers.Supervisors.CustomerId,
 
-      # Defaults.
+      # Phoenix.
       TeapotBackendWeb.Telemetry,
-      TeapotBackend.Repo,
       {DNSCluster, query: Application.get_env(:teapot_backend, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: TeapotBackend.PubSub},
       # Start a worker by calling: TeapotBackend.Worker.start_link(arg)

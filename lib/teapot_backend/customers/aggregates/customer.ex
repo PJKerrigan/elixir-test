@@ -9,13 +9,13 @@ defmodule TeapotBackend.Customers.Aggregates.Customer do
   def apply(%Customer{} = aggregate, %CustomerCreated{id: id, recorded_at: recorded_at}) do
     %Customer{aggregate |
       id: id,
-      created_at: DateTime.from_iso8601(recorded_at)
+      created_at: recorded_at
     }
   end
 
   def apply(%Customer{} = aggregate, %CustomerDeleted{recorded_at: recorded_at, reason: reason}) do
     %Customer{aggregate |
-      deleted_at: DateTime.from_iso8601(recorded_at),
+      deleted_at: recorded_at,
       deleted_reason: reason
     }
   end

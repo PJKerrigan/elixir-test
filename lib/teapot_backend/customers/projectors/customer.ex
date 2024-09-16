@@ -11,7 +11,7 @@ defmodule TeapotBackend.Customers.Projectors.Customer do
   project(%CustomerCreated{id: id, recorded_at: recorded_at} = _event, _, fn multi ->
     Ecto.Multi.insert(multi, {:customer, id}, Projection.changeset_insert(%Projection{}, %{
       id: id,
-      created_at: DateTime.from_iso8601(recorded_at)
+      created_at: DateTime.from_iso8601(recorded_at) |> elem(1)
     }))
   end)
 
@@ -21,7 +21,7 @@ defmodule TeapotBackend.Customers.Projectors.Customer do
       projection ->
         Ecto.Multi.update(multi, {:customer, id}, Projection.changeset_delete(projection, %{
           id: id,
-          deleted_at: DateTime.from_iso8601(recorded_at)
+          deleted_at: DateTime.from_iso8601(recorded_at) |> elem(1)
         }))
     end
   end)

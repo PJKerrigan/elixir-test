@@ -1,4 +1,4 @@
-defmodule Migrations.CreateCustomersTable do
+defmodule TeapotBackend.Repo.Migrations.CreateCustomersTable do
   use Ecto.Migration
 
   def change do
