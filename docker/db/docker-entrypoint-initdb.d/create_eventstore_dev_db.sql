@@ -1,0 +1,1 @@
+CREATE DATABASE teapot_backend_eventstore_dev;
